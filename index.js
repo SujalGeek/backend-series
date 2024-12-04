@@ -10,7 +10,7 @@ const connection = require("./connection/db");
 const start = async() =>{
 try{
 
-await connection()
+await connection(process.env.MONGODB_URL)
 app.listen(port,console.log("Server is listening on port"));
 }
 catch(err){
