@@ -17,6 +17,10 @@ app.get("/readfile", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Done with this process");
 });
+app.get("/home",(req,res)=>{
+  res.send("Home page")
+})
+
 
 app.get("/exit", (req, res) => {
   res.send("Server is stoppped");
