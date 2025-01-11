@@ -25,9 +25,23 @@ const login = async (req, res) => {
 };
 
 const dashboard = async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    throw new CustomAPIError("No token provided", 401);
+  }
+  // console.log(req.headers);
+  const token = authHeader.split(" ")[1];
+  // console.log(token);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
+  } catch (error) {
+    throw new CustomAPIError("Not authorized to access the route", 401);
+  }
+
   const luckynumber = Math.floor(Math.random() + 100);
   res.status(200).send({
-    message: "Hello",
+    message: `Hello, ${decoded.username}`,
     secret: `Here is your authorized data ${luckynumber}`,
   });
 };
